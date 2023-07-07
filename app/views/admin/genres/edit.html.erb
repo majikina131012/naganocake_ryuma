@@ -1,0 +1,13 @@
+<h1>ジャンル編集</h1>
+
+<%= form_with model: @genre, url: admin_genre_path do |f| %>
+
+  <div class="field">
+    <%= f.label :ジャンル名 %><br>
+    <%= f.text_field :name %>
+  </div>
+  
+  <%= f.submit '登録' %>
+<% end %>
+
+<%= link_to "削除", admin_genre_path(@genre.id), method: :delete, "data-confirm" => "本当に削除しますか？" %>

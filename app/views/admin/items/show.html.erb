@@ -1,0 +1,23 @@
+<h1>商品詳細</h1>
+
+<%= image_tag @item.get_item_image(100,100) %>
+
+<h2>商品名</h2>
+<p><%= @item.name %></p>
+
+<h2>説明文</h2>
+<p><%= @item.description %></p>
+
+<h2>値段</h2>
+<p><%= @item.price_without_tax %></p>
+
+<h2>ジャンル</h2>
+<p><%= Genre.find_by(id: @item.genre_id)&.name %></p>
+
+<h2>販売ステータス</h2>
+<p> <% if @item.is_active == true %>
+      販売中
+    <% else %>
+      販売停止
+    <% end %>
+</p>
