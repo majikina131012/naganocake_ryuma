@@ -19,6 +19,11 @@ scope module: :public do
     patch '/customers/withdraw' => 'customers#withdraw'
     resources :customers
     resources :items
+    resources :cart_items do
+      collection do
+        delete 'destroy_all'
+      end
+    end
   end
   
   namespace :admin do

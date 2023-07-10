@@ -28,7 +28,7 @@
 
         <li class="menu-item"><%= link_to "商品一覧", items_path %></li>
 
-        <li class="menu-item">カート</li>
+        <li class="menu-item"><%= link_to "カート", cart_items_path %></li>
 
         <li class="menu-item"><%= link_to "ログアウト", destroy_customer_session_path, method: :delete %></li>
       </ul>
@@ -80,9 +80,9 @@
       <% end %>
 
     </header>
-    
+
       <%= flash[:notice] %>
-  
+
     <%= yield %>
   </body>
 </html>

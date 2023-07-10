@@ -12,9 +12,11 @@
     <tr>
       <td><%= image_tag item.get_item_image(100,100) %></td>
       <td><%= item.name %></td>
-      <td><%= item.add_tax_price.to_s(:dalimited) %>
+      <td><%= item.with_tax_price.to_s(:dalimited) %> 円</td>
+      <td><%= link_to "詳細", item_path(item.id) %></td>
     </tr>
   </table>
-<% end %>  
+
+<% end %>
 
 <% end %>

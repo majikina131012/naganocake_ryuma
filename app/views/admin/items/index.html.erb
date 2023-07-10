@@ -23,7 +23,10 @@
           販売停止中
         <% end %>
     </td>
-    <td><%= link_to "削除", admin_item_path(item.id), method: :delete, "data-confirm" => "本当に削除しますか？" %></td>
+    <td>
+      <%= link_to "編集", edit_admin_item_path(item.id) %>
+      <%= link_to "削除", admin_item_path(item.id), method: :delete, "data-confirm" => "本当に削除しますか？" %>
+    </td>
   </tr>
 </table>
 
