@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  namespace :public do
+    get 'adresses/index'
+  end
   # 顧客用
 # URL /customers/sign_in ...
 devise_for :customers,skip: [:passwords], controllers: {
@@ -24,6 +27,7 @@ scope module: :public do
         delete 'destroy_all'
       end
     end
+    resources :addresses
   end
   
   namespace :admin do
