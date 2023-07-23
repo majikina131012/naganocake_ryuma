@@ -28,6 +28,10 @@ scope module: :public do
       end
     end
     resources :addresses
+    get '/orders/thanks' => 'orders#thanks'
+    post '/orders/confirm' => 'orders#confirm'
+    resources :orders, only: [:new, :create, :index, :show]
+    
   end
   
   namespace :admin do
@@ -35,6 +39,8 @@ scope module: :public do
     resources :customers
     resources :genres
     resources :items
+    resources :orders
+    resources :order_details
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

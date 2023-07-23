@@ -3,11 +3,17 @@ class Customer < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-         
+
   has_many :cart_items, dependent: :destroy
   has_many :addresses, dependent: :destroy
-         
+  has_many :order, dependent: :destroy
+
   def active_for_authentication?
     super && (is_deleted == false)
-  end       
+  end
+  
+  def full_address
+    '〒' + postal_code + ' ' + address
+  end
+  
 end
