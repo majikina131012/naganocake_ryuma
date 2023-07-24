@@ -12,17 +12,15 @@
 
   <body>
     <header>
-      <h1>Nagano Cake</h1>
+      <h1><%= link_to root_path do %>
+            <i class="fas fa-store"></i>Nagano Cake
+          <% end %>
+      </h1>
 
       <% if customer_signed_in? %>
 
       <nav class="nav">
       <ul class="menu-group">
-        <li class="menu-item">
-          <%= link_to root_path do %>
-            <i class="fas fa-store"></i>
-          <% end %>
-        </li>
 
         <li class="menu-item"><%= link_to "マイページ", customer_path(current_customer.id) %></li>
 
@@ -38,11 +36,6 @@
 
       <nav class="nav">
       <ul class="menu-group">
-        <li class="menu-item">
-          <%= link_to [:admin, :root] do %>
-            <i class="fas fa-store"></i>
-          <% end %>
-        </li>
 
         <li class="menu-item"><%= link_to "商品一覧", admin_items_path %></li>
 
@@ -62,11 +55,8 @@
 
       <nav class="nav">
       <ul class="menu-group">
-        <li class="menu-item">
-          <%= link_to root_path do %>
-            <i class="fas fa-store"></i>
-          <% end %>
-        </li>
+
+        <li class="menu-item"><%= link_to "About", about_path %></li>
 
         <li class="menu-item"><%= link_to "商品一覧", items_path %></li>
 
