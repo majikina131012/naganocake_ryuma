@@ -1,4 +1,15 @@
 ja:
+  activerecord:
+    errors:
+      models:
+        admin:
+          attributes:
+            email:
+              taken: "このメールアドレスはすでに使用されています。"
+
+      messages:
+        record_invalid: "バリデーションに失敗しました: %{errors}"
+      
   devise:
     registrations:
       signed_up: 'アカウント登録が完了しました'

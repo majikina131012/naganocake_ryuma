@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get 'search/search'
+  end
   namespace :public do
     get 'adresses/index'
   end
@@ -32,14 +35,14 @@ scope module: :public do
     get '/orders/thanks' => 'orders#thanks'
     post '/orders/confirm' => 'orders#confirm'
     resources :orders, only: [:new, :create, :index, :show]
-    
+
   end
-  
+
   namespace :admin do
     root to: 'homes#top'
     resources :customers
     resources :genres
-    resources :items
+    resources :items 
     resources :orders
     resources :order_details
   end

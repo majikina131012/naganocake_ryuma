@@ -36,7 +36,6 @@
 
       <nav class="nav">
       <ul class="menu-group">
-
         <li class="menu-item"><%= link_to "商品一覧", admin_items_path %></li>
 
         <li class="menu-item"><%= link_to "会員一覧", admin_customers_path %></li>
@@ -50,6 +49,11 @@
         <li class="menu-item"><%= link_to "ログアウト", destroy_admin_session_path, method: :delete %></li>
       </ul>
       </nav>
+
+      <%= search_form_for @search, url: admin_items_path do |f| %>
+        <%= f.text_field :name_cont, placeholder: '名前を入力' %>
+        <%= f.submit '検索' %>
+      <% end %>
 
       <% else %>
 
