@@ -7,72 +7,80 @@
     <%= csp_meta_tag %>
     <script src="https://kit.fontawesome.com/5d458e57a9.js" crossorigin="anonymous"></script>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <header>
-      <h1><%= link_to root_path do %>
-            <i class="fas fa-store"></i>Nagano Cake
-          <% end %>
-      </h1>
-
-      <% if customer_signed_in? %>
-
-      <nav class="nav">
-      <ul class="menu-group">
-
-        <li class="menu-item"><%= link_to "マイページ", customer_path(current_customer.id) %></li>
-
-        <li class="menu-item"><%= link_to "商品一覧", items_path %></li>
-
-        <li class="menu-item"><%= link_to "カート", cart_items_path %></li>
-
-        <li class="menu-item"><%= link_to "ログアウト", destroy_customer_session_path, method: :delete %></li>
-      </ul>
-      </nav>
-
-      <% elsif admin_signed_in? %>
-
-      <nav class="nav">
-      <ul class="menu-group">
-        <li class="menu-item"><%= link_to "商品一覧", admin_items_path %></li>
-
-        <li class="menu-item"><%= link_to "会員一覧", admin_customers_path %></li>
-
-        <li class="menu-item"><%= link_to "注文履歴一覧", admin_root_path %></li>
-
-        <li class="menu-item"><%= link_to "ジャンル一覧", admin_genres_path %></li>
-
-        <li class="menu-item"><%= link_to "会員一覧", admin_customers_path %></li>
-
-        <li class="menu-item"><%= link_to "ログアウト", destroy_admin_session_path, method: :delete %></li>
-      </ul>
-      </nav>
-
-      <%= search_form_for @search, url: admin_items_path do |f| %>
-        <%= f.text_field :name_cont, placeholder: '名前を入力' %>
-        <%= f.submit '検索' %>
-      <% end %>
-
-      <% else %>
-
-      <nav class="nav">
-      <ul class="menu-group">
-
-        <li class="menu-item"><%= link_to "About", about_path %></li>
-
-        <li class="menu-item"><%= link_to "商品一覧", items_path %></li>
-
-        <li class="menu-item"><%= link_to "新規登録", new_customer_registration_path %></li>
-
-        <li class="menu-item"><%= link_to "ログイン", new_customer_session_path %></li>
-
-      </ul>
-      </nav>
-
-      <% end %>
-
+    
+      <header>
+        <h1><%= link_to root_path do %>
+              <i class="fas fa-store"></i>Nagano Cake
+            <% end %>
+        </h1>
+        <div class="global-header-link-container">
+        <% if customer_signed_in? %>
+  
+        <nav class="nav">
+          <div class="menu-group-list">
+            <ul class="menu-group">
+      
+              <li class="menu-item">
+                <div class="global-header-link">
+                  <%= link_to "マイページ", customer_path(current_customer.id) %>
+                </div>
+              </li>
+      
+              <li class="menu-item"><%= link_to "商品一覧", items_path %></li>
+      
+              <li class="menu-item"><%= link_to "カート", cart_items_path %></li>
+      
+              <li class="menu-item"><%= link_to "ログアウト", destroy_customer_session_path, method: :delete %></li>
+            </ul>
+            </nav>
+      
+            <% elsif admin_signed_in? %>
+      
+            <nav class="nav">
+            <ul class="menu-group">
+              <li class="menu-item"><%= link_to "商品一覧", admin_items_path %></li>
+      
+              <li class="menu-item"><%= link_to "会員一覧", admin_customers_path %></li>
+      
+              <li class="menu-item"><%= link_to "注文履歴一覧", admin_root_path %></li>
+      
+              <li class="menu-item"><%= link_to "ジャンル一覧", admin_genres_path %></li>
+      
+              <li class="menu-item"><%= link_to "会員一覧", admin_customers_path %></li>
+      
+              <li class="menu-item"><%= link_to "ログアウト", destroy_admin_session_path, method: :delete %></li>
+              </div
+            </ul>
+        </nav>
+  
+        <%= search_form_for @search, url: admin_items_path do |f| %>
+          <%= f.text_field :name_cont, placeholder: '名前を入力' %>
+          <%= f.submit '検索' %>
+        <% end %>
+  
+        <% else %>
+  
+        <nav class="nav">
+        <ul class="menu-group">
+  
+          <li class="menu-item"><%= link_to "About", about_path %></li>
+  
+          <li class="menu-item"><%= link_to "商品一覧", items_path %></li>
+  
+          <li class="menu-item"><%= link_to "新規登録", new_customer_registration_path %></li>
+  
+          <li class="menu-item"><%= link_to "ログイン", new_customer_session_path %></li>
+  
+        </ul>
+        </nav>
+  
+        <% end %>
+      </div>
     </header>
 
       <%= flash[:notice] %>

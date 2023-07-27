@@ -1,22 +1,15 @@
-<h1>商品一覧</h1>
-
-<% @items.each do |item| %>
-
-  <% if item.is_active == true %>
-  <table>
-    <tr>
-      <th></th>
-      <th>商品名</th>
-      <th>税込価格</th>
-    </tr>
-    <tr>
-      <td><%= image_tag item.get_item_image(100,100) %></td>
-      <td><%= item.name %></td>
-      <td><%= item.with_tax_price.to_s(:dalimited) %> 円</td>
-      <td><%= link_to "詳細", item_path(item.id) %></td>
-    </tr>
-  </table>
-
-  <% end %>
-
-<% end %>
+<main>
+  <div class="container px-5 px-sm-0">
+    <div class="row">
+      <div class="col-md-4">
+        <h2>ジャンル一覧</h2>
+        <% @genres.each do |genre| %>
+          <p><%= link_to genre.name, items_path(genre_id: genre.id) %></p>
+        <% end %>
+      </div>
+      <div class="col-md-8">
+        <%= render 'index', items: @items %>
+      </div>
+    </div>
+  </div>
+</main>
