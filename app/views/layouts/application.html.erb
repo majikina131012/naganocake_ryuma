@@ -2,89 +2,88 @@
 <html>
   <head>
     <title>NaganoCake</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <script src="https://kit.fontawesome.com/5d458e57a9.js" crossorigin="anonymous"></script>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%#= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    
-      <header>
-        <h1><%= link_to root_path do %>
-              <i class="fas fa-store"></i>Nagano Cake
-            <% end %>
-        </h1>
-        <div class="global-header-link-container">
-        <% if customer_signed_in? %>
-  
-        <nav class="nav">
-          <div class="menu-group-list">
-            <ul class="menu-group">
-      
-              <li class="menu-item">
-                <div class="global-header-link">
-                  <%= link_to "マイページ", customer_path(current_customer.id) %>
-                </div>
-              </li>
-      
-              <li class="menu-item"><%= link_to "商品一覧", items_path %></li>
-      
-              <li class="menu-item"><%= link_to "カート", cart_items_path %></li>
-      
-              <li class="menu-item"><%= link_to "ログアウト", destroy_customer_session_path, method: :delete %></li>
-            </ul>
+      <header class="header">
+        <div class="header__inner">
+          <h1 class="header__title header-title">
+            <%= link_to root_path, class: "no-underline" do %>
+                <font color = "green">
+                  <i class="fas fa-store"></i>Nagano Cake
+                </font>
+              <% end %>
+          </h1>
+            <nav class="navbar navbar-expand-lg navbar-light">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="nav__items nav-items">
+                <% if customer_signed_in? %>
+                  <li class="nav-items__item">
+                    <div class="global-header-link">
+                      <%= link_to "マイページ", mypage_path %>
+                    </div>
+                  </li>
+                  <li class="nav-items__item"><%= link_to "商品一覧", items_path %></li>
+                  <li class="nav-items__item"><%= link_to "カート", cart_items_path %></li>
+                  <li class="nav-items__item"><%= link_to "ログアウト", destroy_customer_session_path, method: :delete %></li>
+
+                <% elsif admin_signed_in? %>
+                  <li class="nav-items__item"><%= link_to "商品一覧", admin_items_path %></li>
+
+                  <li class="nav-items__item"><%= link_to "会員一覧", admin_customers_path %></li>
+
+                  <li class="nav-items__item"><%= link_to "注文履歴一覧", admin_top_path %></li>
+
+                  <li class="nav-items__item"><%= link_to "ジャンル一覧", admin_genres_path %></li>
+
+                  <li class="nav-items__item"><%= link_to "会員一覧", admin_customers_path %></li>
+
+                  <li class="nav-items__item"><%= link_to "ログアウト", destroy_admin_session_path, method: :delete %></li>
+
+                <% if admin_signed_in? %>
+                  <%= form_tag(admin_search_path, method: :get) do %>
+                    <%= text_field_tag "search[content]", "", :placeholder =>"会員: 姓,名,セイ,メイ / 商品: 商品名" %>
+                    <%= select_tag "search[model]", options_for_select({ "会員" => "customer", "商品" => "item" }) %>
+                    <%= select_tag "search[method]", options_for_select({ "部分一致" => "partial", "前方一致" => "forward", "後方一致" => "backward", "完全一致" => "perfect" }) %>
+                    <%= submit_tag '検索', class: "btn btn-primary" %>
+                  <% end %>
+                <% end %>
+
+                <%= search_form_for @search, url: admin_items_path do |f| %>
+                  <%= f.text_field :name_cont, placeholder: '名前を入力' %>
+                 <%= f.submit '検索' %>
+                <% end %>
+
+                <% else %>
+                  <li class="nav-items__item"><%= link_to "About", about_path %></li>
+                  <li class="nav-items__item"><%= link_to "商品一覧", items_path %></li>
+                  <li class="nav-items__item"><%= link_to "新規登録", new_customer_registration_path, class:"btn btn-outline-success" %></li>
+                  <li class="nav-items__item"><%= link_to "ログイン", new_customer_session_path, class:"btn btn-primary rounded-pill" %></li>
+                <% end %>
+              </ul>
+              </div>
             </nav>
-      
-            <% elsif admin_signed_in? %>
-      
-            <nav class="nav">
-            <ul class="menu-group">
-              <li class="menu-item"><%= link_to "商品一覧", admin_items_path %></li>
-      
-              <li class="menu-item"><%= link_to "会員一覧", admin_customers_path %></li>
-      
-              <li class="menu-item"><%= link_to "注文履歴一覧", admin_root_path %></li>
-      
-              <li class="menu-item"><%= link_to "ジャンル一覧", admin_genres_path %></li>
-      
-              <li class="menu-item"><%= link_to "会員一覧", admin_customers_path %></li>
-      
-              <li class="menu-item"><%= link_to "ログアウト", destroy_admin_session_path, method: :delete %></li>
-              </div
-            </ul>
-        </nav>
-  
-        <%= search_form_for @search, url: admin_items_path do |f| %>
-          <%= f.text_field :name_cont, placeholder: '名前を入力' %>
-          <%= f.submit '検索' %>
-        <% end %>
-  
-        <% else %>
-  
-        <nav class="nav">
-        <ul class="menu-group">
-  
-          <li class="menu-item"><%= link_to "About", about_path %></li>
-  
-          <li class="menu-item"><%= link_to "商品一覧", items_path %></li>
-  
-          <li class="menu-item"><%= link_to "新規登録", new_customer_registration_path %></li>
-  
-          <li class="menu-item"><%= link_to "ログイン", new_customer_session_path %></li>
-  
-        </ul>
-        </nav>
-  
-        <% end %>
       </div>
     </header>
 
       <%= flash[:notice] %>
 
-    <%= yield %>
+      <main>
+        <%= yield %>
+      </main>
+
+      <footer>
+        Ryuma.majikina ^^
+      </footer>
   </body>
 </html>

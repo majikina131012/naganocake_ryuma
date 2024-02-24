@@ -18,33 +18,45 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
   sessions: "admin/sessions"
 }
 
-root to: 'public/homes#top'
+# root to: 'public/homes#top'
 get 'home/about' => 'public/homes#about', as: 'about'
 
 scope module: :public do
-    get '/customers/check' => 'customers#check'
+    root 'homes#top'
+  
+    get 'customers/mypage' => 'customers#show', as: 'mypage'
+    get 'customers/information/edit' => 'customers#edit', as: 'edit_information'
+    # ↑customers/editのようにするとdeviseのルーティングとかぶってしまうためinformationを付け加えている。
+    patch 'customers/information' => 'customers#update', as: 'update_information'
+    get '/customers/check' => 'customers#check', as: 'comfirm_unsubscribe'
     patch '/customers/withdraw' => 'customers#withdraw'
-    resources :customers
-    resources :items
-    resources :cart_items do
-      collection do
-        delete 'destroy_all'
-      end
-    end
+    
+    
+    
+    delete 'cart_items/destroy_all' => 'cart_items#destroy_all', as: 'destroy_all_cart_items'
+    
+    # resources :customers
+    resources :items, only: [:index, :show] 
+    resources :cart_items, only: [:index,:create, :update, :destroy]
     resources :addresses
     get '/orders/thanks' => 'orders#thanks'
     post '/orders/confirm' => 'orders#confirm'
+    get 'orders/confirm' => 'orders#error'
     resources :orders, only: [:new, :create, :index, :show]
 
   end
 
   namespace :admin do
-    root to: 'homes#top'
-    resources :customers
+    get 'top' => 'homes#top', as: 'top'
+    get 'search' => 'homes#search', as: 'search'
+    get 'customers/:customer_id/orders' => 'order#idex', as: 'customer_orders'
+    
+    resources :customers, only: [:index, :show, :edit, :update]
     resources :genres
-    resources :items 
-    resources :orders
-    resources :order_details
+    resources :items
+    resources :orders, only: [:index, :show, :update] do
+      resources :order_details, only: [:update]
+    end  
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

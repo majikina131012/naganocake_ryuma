@@ -1,34 +1,41 @@
-<% items.each do |item| %>
+
 
 <table>
-  <tr>
-    <th></th>
-    <th>商品id</th>
-    <th>商品名</th>
-    <th>税抜価格</th>
-    <th>ジャンル</th>
-    <th>販売ステータス</th>
-    <th></th>
-  </tr>
-  <tr>
-    <td><%= image_tag item.get_item_image(100,100) %></td>
-    <td><%= item.id %></td>
-    <td><%= item.name %></td>
-    <td><%= item.price_without_tax %></td>
-    <td><%= Genre.find_by(id: item.genre_id)&.name %></td>
-    <td><% if item.is_active == true %>
-          販売中
-        <% else %>
-          販売停止中
-        <% end %>
-    </td>
-    <td>
-      <%= link_to "編集", edit_admin_item_path(item.id) %>
-      <%= link_to "削除", admin_item_path(item.id), method: :delete, "data-confirm" => "本当に削除しますか？" %>
-    </td>
-  </tr>
+  <thead>
+    <tr>
+      <th></th>
+      <th>商品ID</th>
+      <th>商品名</th>
+      <th>税抜価格</th>
+      <th>ジャンル</th>
+      <th>販売ステータス</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% items.each do |item| %>
+      <tr>
+        <td><%= image_tag item.get_item_image(100,100) %></td>
+        <td><%= item.id %></td>
+        <td><%= link_to item.name, admin_item_path(item.id), class: "underline" %></td>
+        <td><%= item.price_without_tax %></td>
+        <!--<td><%#= Genre.find_by(id: item.genre_id)&.name %></td>-->
+        <td><%= link_to item.genre.name, admin_items_path(genre_id: item.genre_id) %></td>
+        <td><% if item.is_active? %>
+              販売中
+            <% else %>
+              販売停止中
+            <% end %>
+        </td>
+        <td>
+          <%= link_to "編集", edit_admin_item_path(item.id) %>
+          <%= link_to "削除", admin_item_path(item.id), method: :delete, "data-confirm" => "本当に削除しますか？" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
-<% end %>
+
 
 <%= link_to "商品新規登録", new_admin_item_path %>

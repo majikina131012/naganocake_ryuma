@@ -1,8 +1,15 @@
 class Admin::OrdersController < ApplicationController
+  before_action :authenticate_admin!
+  before_action :ensure_order, only: [:show, :update]
+  
+  def index
+  end  
   
   def show
     @order_details = OrderDetail.where(order_id: params[:id])
-    @order = Order.find(params[:id])
+    # ↑このコードは、OrderDetail モデルから order_id が指定された params[:id] と一致する注文の詳細情報を取得しようとしています。
+    @customer = @order.customer
+    # @order = Order.find(params[:id])
   end
   
   def update
@@ -18,5 +25,9 @@ class Admin::OrdersController < ApplicationController
   
   def order_params
     params.require(:order).permit(:status)
+  end
+  
+  def ensure_order
+    @order = Order.find(params[:id])
   end  
 end

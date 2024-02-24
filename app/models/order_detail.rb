@@ -2,6 +2,10 @@ class OrderDetail < ApplicationRecord
   belongs_to :order
   belongs_to :item
   
+  validates :item_id, uniqueness: { scope: :order_id }
+  validates :purchase_price, presence: true, :numericality => { :greater_than_or_equal_to => 0 }
+  validates :amount, presence: true, :numericality => { :greater_than_or_equal_to => 1 }
+  
   enum making_status:
         {
           impossible_manufacture:0,
@@ -11,6 +15,6 @@ class OrderDetail < ApplicationRecord
         }
         
   def subtotal
-    item.with_tax_price * amount
+    purchase_price * amount
   end
 end

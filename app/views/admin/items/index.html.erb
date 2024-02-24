@@ -1,6 +1,18 @@
 <h1>(admin)商品一覧</h1>
-<% if @search_items %>
-  <%= render 'admin/items/item', items: @search_items %>
-<% else %>
-<%= render 'admin/items/item', items: @items %>
-<% end %>
+  <!--<%# if @search_items %>-->
+  <!--  <%#= render 'admin/items/item', items: @search_items %>-->
+  <!--<%# else %>-->
+    <% if params[:genre_id] %>
+      <h2><%= @genre.name %>の商品一覧 (全<%= @all_items_count %>件)</h2>
+    <% else %>
+      <h2>商品一覧 (全<%= @all_items_count %>件)</h2>
+    <% end %>
+      <%= link_to "+", new_admin_item_path %>
+
+    <% if @items.first %>
+      <%= render 'admin/items/item', items: @items %>
+      <%= paginate @items %>
+    <% else %>
+      <h2>対応する商品はありませんでした</h2>
+    <% end %>
+  <%# end %>

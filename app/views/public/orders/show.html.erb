@@ -15,7 +15,7 @@
   </tr>
 </table>
 
-<% @sum = 0 %>
+<%# @sum = 0 %>
 <% @order_details.each do |order_detail| %>
 <table>
   <tr>
@@ -25,14 +25,16 @@
     <th>小計</th>
   </tr>
   <tr>
-    <td><%= order_detail.item.name %></td>
+    <td><%= link_to order_detail.item.name, item_path %></td>
     <td><%= order_detail.item.with_tax_price %>円</td>
     <td><%= order_detail.amount %></td>
     <td><%= order_detail.subtotal %>円</td>
   </tr>
 </table>
-<% @sum += order_detail.subtotal %>
+<%# @sum += order_detail.subtotal %>
 <% end %>
-<p>商品合計  <%= @sum %>円</p>
-<p>送料  800円</p>
-<p>請求金額  <%= @sum + 800 %>円</p>
+<!--<p>商品合計  <%#= @sum %>円</p>-->
+<!--<p>請求金額  <%#= @sum + 800 %>円</p>-->
+<p>商品合計  <%= @order.order_details.sum(&:subtotal) %>円</p>
+<p>送料  <%= @order.postage %>円</p>
+<p>総計  <%= @order.billing_amount %>円</p>
