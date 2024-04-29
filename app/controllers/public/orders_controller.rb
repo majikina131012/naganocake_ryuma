@@ -11,31 +11,19 @@ class Public::OrdersController < ApplicationController
     @order = Order.new(order_params)
     @order.postage = 800
     if params[:order][:select_address] == "0"
-
-      # @order.get_shipping_informations_from(current_customer)
-
       @order.postal_code = current_customer.postal_code
       @order.address = current_customer.address
       @order.name = current_customer.last_name + current_customer.first_name
-
     elsif params[:order][:select_address] == "1"
       @selected_address = current_customer.addresses.find(params[:order][:address_id])
-
-      # @order.get_shipping_informations_from(@selected_address)
-
-
       @address = Address.find(params[:order][:address_id])
       @order.postal_code = @address.postal_code
       @order.address = @address.address
       @order.name = @address.name
-
     elsif params[:order][:select_address] == "2" && (@order.postal_code =~ /\A\d{7}\z/) && @order.address? && @order.name?
       # 処理なし
-#       ↑ユーザーが "新しいお届け先" を選択し、かつ郵便番号が7桁の数字であり、かつ @order オブジェクトの属性 address と name が設定されている場合。
-# 条件が成り立つ場合、この条件に合致する特定の処理（おそらく何もしないこと）が実行される
-
-      # @order.customer_id = current_customer.id
-
+      #↑ユーザーが "新しいお届け先" を選択し、かつ郵便番号が7桁の数字であり、かつ @order オブジェクトの属性 address と name が設定されている場合。
+      #条件が成り立つ場合、この条件に合致する特定の処理（おそらく何もしないこと）が実行される
     else
       flash[:notice] = '情報を正しく入力して下さい。'
       render :new
@@ -50,8 +38,6 @@ class Public::OrdersController < ApplicationController
   def show
     @order = current_customer.orders.find(params[:id])
     @order_details = @order.order_details
-    # @order_details = OrderDetail.where(order_id: params[:id])
-    # @order = Order.find(params[:id])
   end
 
   def error
@@ -62,13 +48,12 @@ class Public::OrdersController < ApplicationController
     # customer_id = current_customer.idが入力されている
     @order.postage = 800
     @order.billing_amount = @order.postage + @cart_items.sum(&:subtotal)
-
-      if @order.save
-        @order.create_order_details(current_customer)
-        redirect_to orders_thanks_path
-      else
-        render :new
-      end
+    if @order.save
+      @order.create_order_details(current_customer)
+      redirect_to orders_thanks_path
+    else
+      render :new
+    end
 
   end
 

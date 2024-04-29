@@ -13,6 +13,10 @@ Admin.create!(
 Genre.create!(
     name: "ケーキ"
     )
+    
+Genre.create!(
+    name: "プリン"
+    )
 
 # Item.create!(
 #     name: "チョコケーキ",
@@ -32,7 +36,7 @@ image_file = File.open(image_path)
 item = Item.create!(
   name: "チョコケーキ",
   description: "チョコたっぷり！",
-  price_without_tax: "2000",
+  price_without_tax: "350",
   genre_id: 1,
   is_active: true
 )
@@ -41,4 +45,17 @@ item = Item.create!(
 item.item_image.attach(io: image_file, filename: 'chocolate_cake.jpg')
 
 # 画像ファイルをクローズ
+image_file.close
+
+
+image_path = Rails.root.join('app', 'assets', 'images', 'purin.jpg')
+image_file = File.open(image_path)
+item = Item.create!(
+  name: "プリン",
+  description: "プルプル！",
+  price_without_tax: "200",
+  genre_id: 1,
+  is_active: true
+)
+item.item_image.attach(io: image_file, filename: 'purin.jpg')
 image_file.close

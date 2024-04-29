@@ -15,7 +15,7 @@
 
   <h3>登録済み住所</h3>
   <p><%= f.radio_button :select_address, 1 %>登録済み住所</p>
-  <p><%= f.select :address_id , options_from_collection_for_select(@addresses, :id, :full_address) %></p>
+  <p><%= f.select :address_id, options_from_collection_for_select(current_customer.addresses, :id, :full_address) %></p>
 
   <h3>新しいお届け先</h3>
   <p><%= f.radio_button :select_address, 2 %>新しいお届け先</p>
@@ -38,7 +38,6 @@
       <td><%= f.text_field :name, autocomplete: "name", placeholder: "宛名" %></td>
     </tr>
   </table>
-
   <%= f.submit "確認画面へ進む" %>
 
 <% end %>
