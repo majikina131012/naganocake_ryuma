@@ -21,4 +21,8 @@ class Item < ApplicationRecord
     end
     item_image.variant(resize_to_limit: [width, height]).processed
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "description", "genre_id", "id", "is_active", "name", "price_without_tax", "updated_at"]
+  end
 end

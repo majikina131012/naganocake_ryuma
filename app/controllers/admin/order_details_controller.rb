@@ -7,6 +7,7 @@ class Admin::OrderDetailsController < ApplicationController
     @order_details = @order.order_details.all
     
     is_updated = true
+    
     if @order_detail.update(order_detail_params)
       @order.update(status: 2) if @order_detail.making_status == "manufacturing"  #もし注文詳細の making_status が "manufacturing" の場合、注文のステータスを 2 (制作中) に変更します。
       @order_details.each do |order_detail|

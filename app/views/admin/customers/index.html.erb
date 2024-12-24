@@ -8,6 +8,7 @@
       <th>名前</th>
       <th>メールアドレス</th>
       <th>ステータス</th>
+      <th>詳細</th>
     </tr>
   </thead>
   <tbody>
@@ -23,8 +24,12 @@
           退会済み
         <% end %>
       </td>
+      <td>
+        <%= link_to '詳細情報', admin_customer_path(customer.id) %>
+      </td>
     </tr>
     <% end %>
   </tbody>
 </table>
+
 
