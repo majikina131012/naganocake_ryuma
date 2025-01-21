@@ -54,7 +54,7 @@ item = Item.create!(
   name: "プリン",
   description: "プルプル！",
   price_without_tax: "200",
-  genre_id: 1,
+  genre_id: 2,
   is_active: true
 )
 item.item_image.attach(io: image_file, filename: 'purin.jpg')

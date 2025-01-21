@@ -4,7 +4,7 @@
       <div class="col-md-4">
         <h2>ジャンル一覧</h2>
         <% @genres.each do |genre| %>
-          <p><%= link_to genre.name, items_path(genre_id: genre.id) %></p>
+          <p><%= link_to genre.name, items_path(genre_id: genre.id), class:"btn btn-outline-dark" %></p>
         <% end %>
       </div>
       <div class="col-md-8">

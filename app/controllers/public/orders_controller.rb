@@ -1,13 +1,12 @@
 class Public::OrdersController < ApplicationController
   before_action :authenticate_customer!
-  before_action :ensure_cart_items, only: [:new, :confirm, :create, :error]
 
   def new
     @order = Order.new
-    @addresses = current_customer.addresses
   end
 
   def confirm
+    @cart_items = current_customer.cart_items
     @order = Order.new(order_params)
     @order.postage = 800
     if params[:order][:select_address] == "0"
@@ -32,7 +31,6 @@ class Public::OrdersController < ApplicationController
 
   def index
     @orders = current_customer.orders
-
   end
 
   def show
@@ -44,8 +42,9 @@ class Public::OrdersController < ApplicationController
   end
 
   def create
-    @order = current_customer.orders.new(order_params)
-    # customer_id = current_customer.idが入力されている
+    @cart_items = current_customer.cart_items
+    @order = Order.new(order_params)
+    @order.customer_id = current_customer.id
     @order.postage = 800
     @order.billing_amount = @order.postage + @cart_items.sum(&:subtotal)
     if @order.save
@@ -54,10 +53,7 @@ class Public::OrdersController < ApplicationController
     else
       render :new
     end
-
   end
-
-
 
   def thanks
   end
@@ -67,11 +63,5 @@ class Public::OrdersController < ApplicationController
   def order_params
     params.require(:order).permit(:payment_method, :postal_code, :address, :name)
   end
-
-  def ensure_cart_items
-    @cart_items = current_customer.cart_items
-    redirect_to items_path if @cart_items.empty?
-  end
-# ↑このコードの目的は、ユーザーがカートにアイテムを追加する前に、カート内に少なくとも1つのアイテムが存在することを確認することです。カートが空の場合、ユーザーを商品一覧ページにリダイレクトすることで、カートに商品を追加する前に商品を選択するよう促します。
 
 end

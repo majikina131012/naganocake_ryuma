@@ -20,23 +20,19 @@
 </table>
 
 
-<%= link_to "編集する", edit_information_path %>
+<%= link_to "編集する", edit_information_path, class:"btn btn-outline-warning mt-2 mb-2" %>
 
 <table>
   <tr>
     <td>配送先</td>
     <td>
-      <button>
-        <%= link_to "一覧を見る", addresses_path %>
-      </button>
+    <%= link_to "一覧を見る", addresses_path, class:'btn btn-primary' %>
     </td>
   </tr>
   <tr>
     <td>注文履歴</td>
     <td>
-      <button>
-        <%= link_to "一覧を見る", orders_path %>
-      </button>
+    <%= link_to "一覧を見る", orders_path, class:'btn btn-primary' %>
     </td>
   </tr>
 </table>

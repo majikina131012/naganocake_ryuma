@@ -30,26 +30,20 @@
                 <% if customer_signed_in? %>
                   <li class="nav-items__item">
                     <div class="global-header-link">
-                      <%= link_to "マイページ", mypage_path %>
+                      <%= link_to "マイページ", mypage_path, class:"btn btn-outline-success" %>
                     </div>
                   </li>
-                  <li class="nav-items__item"><%= link_to "商品一覧", items_path %></li>
-                  <li class="nav-items__item"><%= link_to "カート", cart_items_path %></li>
-                  <li class="nav-items__item"><%= link_to "ログアウト", destroy_customer_session_path, method: :delete %></li>
+                  <li class="nav-items__item"><%= link_to "商品一覧", items_path, class:"btn btn-outline-success" %></li>
+                  <li class="nav-items__item"><%= link_to "カート", cart_items_path, class:"btn btn-outline-success" %></li>
+                  <li class="nav-items__item"><%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class:"btn btn-outline-success" %></li>
 
                 <% elsif admin_signed_in? %>
-                  <li class="nav-items__item"><%= link_to "商品一覧", admin_items_path %></li>
-
-                  <li class="nav-items__item"><%= link_to "会員一覧", admin_customers_path %></li>
-
-                  <li class="nav-items__item"><%= link_to "注文履歴一覧", admin_top_path %></li>
-
-                  <li class="nav-items__item"><%= link_to "ジャンル一覧", admin_genres_path %></li>
-
-                  <li class="nav-items__item"><%= link_to "会員一覧", admin_customers_path %></li>
-
-                  <li class="nav-items__item"><%= link_to "ログアウト", destroy_admin_session_path, method: :delete %></li>
-
+                  <li class="nav-items__item"><%= link_to "商品一覧", admin_items_path, class:"btn btn-outline-success" %></li>
+                  <li class="nav-items__item"><%= link_to "会員一覧", admin_customers_path, class:"btn btn-outline-success" %></li>
+                  <li class="nav-items__item"><%= link_to "注文履歴一覧", admin_top_path, class:"btn btn-outline-success" %></li>
+                  <li class="nav-items__item"><%= link_to "ジャンル一覧", admin_genres_path, class:"btn btn-outline-success" %></li>
+                  <li class="nav-items__item"><%= link_to "会員一覧", admin_customers_path, class:"btn btn-outline-success" %></li>
+                  <li class="nav-items__item"><%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class:"btn btn-outline-success" %></li>
                 <% if admin_signed_in? %>
                   <%= form_tag(admin_search_path, method: :get) do %>
                     <%= text_field_tag "search[content]", "", :placeholder =>"会員: 姓,名,セイ,メイ / 商品: 商品名" %>
@@ -65,10 +59,10 @@
                 <% end %>
 
                 <% else %>
-                  <li class="nav-items__item"><%= link_to "About", about_path %></li>
-                  <li class="nav-items__item"><%= link_to "商品一覧", items_path %></li>
+                  <li class="nav-items__item"><%= link_to "About", about_path, class:"btn btn-outline-success" %></li>
+                  <li class="nav-items__item"><%= link_to "商品一覧", items_path, class:"btn btn-outline-success" %></li>
                   <li class="nav-items__item"><%= link_to "新規登録", new_customer_registration_path, class:"btn btn-outline-success" %></li>
-                  <li class="nav-items__item"><%= link_to "ログイン", new_customer_session_path, class:"btn btn-primary rounded-pill" %></li>
+                  <li class="nav-items__item"><%= link_to "ログイン", new_customer_session_path, class:"btn btn-outline-success" %></li>
                 <% end %>
               </ul>
               </div>
@@ -79,7 +73,9 @@
       <%= flash[:notice] %>
 
       <main>
-        <%= yield %>
+        <div class = 'container'>
+         <%= yield %>
+        </div>
       </main>
 
       <footer>
