@@ -1,4 +1,4 @@
-<h4>注文履歴詳細</h4>
+<h3>注文履歴詳細</h3>
 
   <table>
     <thead>
@@ -25,8 +25,6 @@
       </tr>
     </tbody>
   </table>
-
-<%# @sum = 0 %>
 
   <table>
     <thead>
@@ -56,11 +54,16 @@
     </tbody>
     <% end %>
   </table>
-  
-  <%# @sum += order_detail.subtotal %>
-
-<p>商品合計  <%= @order_details.sum(&:subtotal) %>円</p>
- <!--↑配列内の各要素の subtotal メソッドを呼び出して、その合計を計算し、ビューに表示するコードです。-->
-<p>送料  <%= @order.postage %>円</p>
-<p>総計  <%= @order.billing_amount %>円</p>
-<!--billing_amountはorders_controllerで中に値を入れている→@order.billing_amount = @order.postage + @cart_items.sum(&:subtotal)-->
+  <h3>商品合計金額</h3>
+  <table>
+    <tr>
+      <th>商品合計</th>
+      <th>送料</th>
+      <th>総計</th>
+    </tr>
+    <tr>
+      <td><%= @order_details.sum(&:subtotal) %>円</td><!--配列内の各要素の subtotal メソッドを呼び出して、その合計を計算し、ビューに表示するコード。-->
+      <td><%= @order.postage %>円</td>
+      <td><%= @order.billing_amount %>円</td>
+    </tr>
+  </table>

@@ -1,4 +1,7 @@
 <div class="top">
   <h1>Nagano Cakeにようこそ！</h1>
+  <% unless admin_signed_in? %>
+    <%= link_to '管理者ログイン', new_admin_session_path, class:'btn btn-success' %>
+  <% end %>
 </div>
 
